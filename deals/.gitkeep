@@ -1,0 +1,4 @@
+# Place your deals.json file here with all Chalo India special deals
+# Format: JSON array with deal objects containing:
+# - auto_id, pnr, dep_date, route, aud_fare, ind_fare, airline_code, etc.
+

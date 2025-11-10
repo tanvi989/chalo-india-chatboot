@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chalo India - Flight Booking Chatbot</title>
+    <style>
+        /* Chatbot Icon */
+        .chatboot-icon {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f16528, #ff8c42);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(241, 101, 40, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .chatboot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(241, 101, 40, 0.6);
+        }
+
+        .chatboot-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        /* Chat Container */
+        .chatboot-container {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            width: 380px;
+            height: 600px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 999;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform-origin: bottom right;
+        }
+
+        .chatboot-container.active {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Chat Header */
+        .chatboot-header {
+            background: linear-gradient(135deg, #f16528, #ff8c42);
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chatboot-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .chatboot-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .chatboot-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Chat Messages */
+        .chatboot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #f9f9f9;
+        }
+
+        .chatboot-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            font-size: 14px;
+        }
+
+        .chatboot-bot-message {
+            background: white;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .chatboot-user-message {
+            background: linear-gradient(135deg, #f16528, #ff8c42);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* Chat Input */
+        .chatboot-input {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .chatboot-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .chatboot-input input:focus {
+            border-color: #f16528;
+        }
+
+        .chatboot-input button {
+            background: linear-gradient(135deg, #f16528, #ff8c42);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .chatboot-input button:hover {
+            transform: scale(1.05);
+        }
+
+        .chatboot-input button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Booking Summary */
+        .chatboot-booking-summary {
+            background: white;
+            border-left: 4px solid #f16528;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .chatboot-booking-summary h3 {
+            margin-bottom: 10px;
+            color: #f16528;
+            font-size: 16px;
+        }
+
+        .chatboot-booking-summary p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Contact Button */
+        .chatboot-contact-btn {
+            background: #f16528;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .chatboot-contact-btn:hover {
+            background: #e05a20;
+        }
+
+        /* Typing Indicator */
+        .chatboot-typing-indicator {
+            display: flex;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 18px;
+            width: fit-content;
+        }
+
+        .chatboot-typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            animation: chatboot-typing 1.4s infinite;
+        }
+
+        .chatboot-typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chatboot-typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes chatboot-typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Testimonial */
+        .chatboot-testimonial {
+            background: #fff9f0;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #f16528;
+        }
+
+        .chatboot-testimonial p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .chatboot-testimonial .chatboot-author {
+            font-weight: 600;
+            color: #f16528;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        /* OTP Input */
+        .chatboot-otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .chatboot-otp-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .chatboot-otp-input:focus {
+            border-color: #f16528;
+        }
+
+        /* City Selection */
+        .chatboot-city-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .chatboot-city-option {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chatboot-city-option:hover {
+            background: #fff9f0;
+            border-color: #f16528;
+        }
+
+        .chatboot-city-option .chatboot-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #f16528;
+            color: white;
+            border-radius: 50%;
+            line-height: 24px;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        /* Trip Type Selection */
+        .chatboot-trip-options {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .chatboot-trip-option {
+            flex: 1;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chatboot-trip-option:hover {
+            background: #fff9f0;
+            border-color: #f16528;
+        }
+
+        /* Error Message */
+        .chatboot-error {
+            background: #fee;
+            color: #c33;
+            border-left: 4px solid #c33;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .chatboot-container {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .chatboot-icon {
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Chatbot Icon -->
+    <div class="chatboot-icon" id="chatbootIcon">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L1 23l6.71-1.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10s-4.48-10-10-10zm0 18c-1.41 0-2.73-.36-3.88-.99l-.28-.15-3.12.91.91-3.12-.15-.28C4.36 14.73 4 13.41 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+            <path d="M7 9h10v2H7zm0 3h7v2H7z"/>
+        </svg>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chatboot-container" id="chatbootContainer">
+        <div class="chatboot-header">
+            <h2>✈️ Chalo India Flights</h2>
+            <button class="chatboot-close-btn" id="chatbootCloseBtn">&times;</button>
+        </div>
+        <div class="chatboot-messages" id="chatbootMessages">
+            <div class="chatboot-message chatboot-bot-message">
+                Welcome to Chalo India Flight Booking! 🇮🇳✈️<br><br>
+                I can help you with flight bookings, cancellations, privacy policies, terms & conditions, and general inquiries.<br><br>
+                <div style="background:#fff9f0;border-left:4px solid #f16528;padding:12px;margin:10px 0;border-radius:4px;">
+                    <strong>📖 Quick Guide:</strong><br><br>
+                    <strong>✈️ To Book a Flight:</strong> Type <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">book</code> or <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">book flight</code><br><br>
+                    <strong>💰 To View Deals:</strong> Type <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">deals</code> or <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">show deals</code><br><br>
+                    <strong>🎫 To Book a Deal:</strong> Type <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">book deal id 1</code> (replace 1 with deal ID)<br><br>
+                    <strong>❓ For Help:</strong> Type <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">help</code><br><br>
+                    <strong>📋 Other Commands:</strong><br>
+                    • <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">terms</code> - Terms & Conditions<br>
+                    • <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">contact</code> - Contact Support<br>
+                    • <code style="background:#f16528;color:white;padding:2px 6px;border-radius:3px;">cancel</code> - Cancellation Policy
+                </div>
+                <br>How can I assist you today? 😊
+            </div>
+        </div>
+        <div class="chatboot-input">
+            <input type="text" id="chatbootUserInput" placeholder="Type your message..." autocomplete="off">
+            <button id="chatbootSendBtn">➤</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbootIcon = document.getElementById('chatbootIcon');
+            const chatbootContainer = document.getElementById('chatbootContainer');
+            const chatbootCloseBtn = document.getElementById('chatbootCloseBtn');
+            const chatbootMessages = document.getElementById('chatbootMessages');
+            const chatbootUserInput = document.getElementById('chatbootUserInput');
+            const chatbootSendBtn = document.getElementById('chatbootSendBtn');
+
+            const API_URL = 'http://localhost:3000/api/chat';
+
+            // Toggle chat window
+            chatbootIcon.addEventListener('click', function() {
+                chatbootContainer.classList.add('active');
+                chatbootUserInput.focus();
+            });
+
+            chatbootCloseBtn.addEventListener('click', function() {
+                chatbootContainer.classList.remove('active');
+            });
+
+            function addMessage(content, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = isUser ? 'chatboot-message chatboot-user-message' : 'chatboot-message chatboot-bot-message';
+                messageDiv.innerHTML = content;
+                chatbootMessages.appendChild(messageDiv);
+                chatbootMessages.scrollTop = chatbootMessages.scrollHeight;
+            }
+
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'chatboot-typing-indicator';
+                typingDiv.id = 'chatbootTypingIndicator';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                chatbootMessages.appendChild(typingDiv);
+                chatbootMessages.scrollTop = chatbootMessages.scrollHeight;
+            }
+
+            function removeTypingIndicator() {
+                const indicator = document.getElementById('chatbootTypingIndicator');
+                if (indicator) indicator.remove();
+            }
+
+            async function processUserInput() {
+                const input = chatbootUserInput.value.trim();
+                if (!input) return;
+
+                addMessage(input, true);
+                chatbootUserInput.value = '';
+                chatbootSendBtn.disabled = true;
+
+                showTypingIndicator();
+
+                try {
+                    console.log('Sending request to:', API_URL);
+                    console.log('Message:', input);
+                    
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: input })
+                    });
+
+                    console.log('Response status:', response.status);
+                    console.log('Response ok:', response.ok);
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                        removeTypingIndicator();
+                        addMessage(`<div class="chatboot-error">Error ${response.status}: ${errorData.error || 'Server error'}</div>`, false);
+                        return;
+                    }
+
+                    const data = await response.json();
+                    console.log('Response data:', data);
+
+                    removeTypingIndicator();
+
+                    if (data.error) {
+                        addMessage(`<div class="chatboot-error">Error: ${data.error}</div>`, false);
+                    } else if (data.response) {
+                        addMessage(data.response, false);
+                        
+                        // Handle booking step - show city options if available
+                        if (data.bookingStep && data.cities) {
+                            showCityOptions(data.cities, data.bookingStep);
+                        }
+                    } else {
+                        addMessage('I received your message but got an unexpected response format. Please try again.', false);
+                    }
+                } catch (error) {
+                    removeTypingIndicator();
+                    console.error('Fetch error:', error);
+                    addMessage(`<div class="chatboot-error">Unable to connect to server. Error: ${error.message}<br><br>Please make sure:<br>1. Backend server is running (npm start)<br>2. Server is on http://localhost:3000<br>3. Check browser console for details</div>`, false);
+                } finally {
+                    chatbootSendBtn.disabled = false;
+                    chatbootUserInput.focus();
+                }
+            }
+
+            // Show city options
+            function showCityOptions(cities, step) {
+                const cityContainer = document.createElement('div');
+                cityContainer.className = 'chatboot-city-grid';
+                cityContainer.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;max-height:200px;overflow-y:auto;padding:5px;';
+                
+                cities.forEach(city => {
+                    const cityOption = document.createElement('div');
+                    cityOption.className = 'chatboot-city-option';
+                    cityOption.style.cssText = 'background:white;border:1px solid #eee;border-radius:8px;padding:10px;text-align:center;cursor:pointer;transition:all 0.2s;';
+                    cityOption.innerHTML = `<span class="chatboot-number" style="display:inline-block;width:24px;height:24px;background:#f16528;color:white;border-radius:50%;line-height:24px;margin-right:8px;font-weight:bold;">${city.id}</span>${city.name} (${city.code})`;
+                    cityOption.onclick = function() {
+                        chatbootUserInput.value = city.id.toString();
+                        processUserInput();
+                    };
+                    cityOption.onmouseover = function() {
+                        this.style.background = '#fff9f0';
+                        this.style.borderColor = '#f16528';
+                    };
+                    cityOption.onmouseout = function() {
+                        this.style.background = 'white';
+                        this.style.borderColor = '#eee';
+                    };
+                    cityContainer.appendChild(cityOption);
+                });
+                
+                chatbootMessages.appendChild(cityContainer);
+                chatbootMessages.scrollTop = chatbootMessages.scrollHeight;
+            }
+
+            // Event listeners
+            chatbootSendBtn.addEventListener('click', processUserInput);
+            chatbootUserInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !chatbootSendBtn.disabled) {
+                    processUserInput();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

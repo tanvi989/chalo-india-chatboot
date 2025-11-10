@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - Chalo India Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #f16528, #ff8c42);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        nav {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav a {
+            color: #f16528;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #f16528;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f16528;
+        }
+        h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #f16528;
+            font-family: 'Courier New', monospace;
+        }
+        .command-box {
+            background: #fff9f0;
+            border-left: 4px solid #f16528;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .step {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #f16528;
+        }
+        .step-number {
+            display: inline-block;
+            background: #f16528;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .example {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+        .example strong {
+            color: #2196F3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 40px;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #f16528;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .back-btn:hover {
+            background: #e05a20;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📖 Chalo India Chatbot - User Guide</h1>
+        <p>Complete guide to using the Chalo India Flight Booking Chatbot</p>
+    </header>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">← Back to Chatbot</a>
+            <a href="developer-guide.html">Developer Guide</a>
+            <a href="../admin/index.html">Admin Panel</a>
+        </nav>
+
+        <div class="content">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#booking-flight">Booking a Flight</a></li>
+                <li><a href="#viewing-deals">Viewing and Booking Deals</a></li>
+                <li><a href="#commands">Available Commands</a></li>
+                <li><a href="#faq">Frequently Asked Questions</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ol>
+
+            <h2 id="getting-started">1. Getting Started</h2>
+            <p>Welcome to Chalo India Flight Booking Chatbot! This intelligent assistant helps you book flights between India and Australia.</p>
+            
+            <h3>How to Access</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                Open your web browser
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                Navigate to: <code>http://localhost:3000/index.html</code>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                Click the orange chat icon in the bottom-right corner
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                Start chatting with the bot!
+            </div>
+
+            <h2 id="booking-flight">2. Booking a Flight</h2>
+            <p>To book a regular flight, follow these steps:</p>
+
+            <h3>Step-by-Step Booking Process</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                <strong>Start Booking:</strong> Type <code>book</code> or <code>book flight</code>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <strong>Enter Your Name:</strong> Provide your full name
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <strong>Enter Email:</strong> Provide a valid email address (e.g., name@example.com)
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <strong>Enter Mobile:</strong> Provide your mobile number with country code
+            </div>
+            <div class="step">
+                <span class="step-number">5</span>
+                <strong>Enter Passport:</strong> Provide your passport number (minimum 5 characters)
+            </div>
+            <div class="step">
+                <span class="step-number">6</span>
+                <strong>Select Departure Country:</strong> Type "India" or "Australia"
+            </div>
+            <div class="step">
+                <span class="step-number">7</span>
+                <strong>Select Departure City:</strong> Choose from the list (type number 1-10 or city name)
+            </div>
+            <div class="step">
+                <span class="step-number">8</span>
+                <strong>Select Destination Country:</strong> Type the opposite country
+            </div>
+            <div class="step">
+                <span class="step-number">9</span>
+                <strong>Select Destination City:</strong> Choose from the list
+            </div>
+            <div class="step">
+                <span class="step-number">10</span>
+                <strong>Enter Departure Date:</strong> Format: DD/MM/YYYY (e.g., 25/12/2024)
+            </div>
+            <div class="step">
+                <span class="step-number">11</span>
+                <strong>Enter Return Date:</strong> Type date or "no" for one-way trip
+            </div>
+            <div class="step">
+                <span class="step-number">12</span>
+                <strong>Enter Passengers:</strong> Number of passengers (1-9)
+            </div>
+            <div class="step">
+                <span class="step-number">13</span>
+                <strong>Select Travel Class:</strong> Type "Economy", "Business", or "First"
+            </div>
+            <div class="step">
+                <span class="step-number">14</span>
+                <strong>Confirm:</strong> Review summary and type <code>confirm</code>
+            </div>
+
+            <div class="example">
+                <strong>Example Booking Flow:</strong><br>
+                User: <code>book</code><br>
+                Bot: Step 1: What is your full name?<br>
+                User: John Doe<br>
+                Bot: Step 2: What is your email address?<br>
+                User: john@example.com<br>
+                ... (continues through all steps)
+            </div>
+
+            <h2 id="viewing-deals">3. Viewing and Booking Deals</h2>
+            
+            <h3>Viewing Available Deals</h3>
+            <p>To see all available flight deals:</p>
+            <div class="command-box">
+                Type: <code>deals</code> or <code>show deals</code>
+            </div>
+
+            <h3>Searching for Specific Deals</h3>
+            <p>You can search for deals by:</p>
+            <ul>
+                <li><strong>Route:</strong> <code>deals from melbourne to delhi</code></li>
+                <li><strong>Month:</strong> <code>deals in december</code></li>
+                <li><strong>Price:</strong> <code>lowest fare deals</code></li>
+                <li><strong>Combined:</strong> <code>lowest fare deals in december for melbourne to delhi</code></li>
+            </ul>
+
+            <h3>Booking with a Deal ID</h3>
+            <p>When you find a deal you like, book it using the Deal ID:</p>
+            <div class="step">
+                <span class="step-number">1</span>
+                Type: <code>book deal id 1</code> (replace 1 with the actual Deal ID)
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                The route is automatically set from the deal (no need to select cities!)
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                Follow the booking steps (name, email, mobile, passport, dates, passengers, class)
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                Confirm your booking
+            </div>
+
+            <div class="example">
+                <strong>Example Deal Booking:</strong><br>
+                User: <code>deals</code><br>
+                Bot: Shows list of deals with Deal IDs<br>
+                User: <code>book deal id 3</code><br>
+                Bot: Great! I'll help you book Deal ID 3. Route: MEL-DEL, Price: AUD $663...<br>
+                User: John Doe<br>
+                ... (continues with simplified booking steps)
+            </div>
+
+            <h2 id="commands">4. Available Commands</h2>
+            
+            <h3>Booking Commands</h3>
+            <ul>
+                <li><code>book</code> - Start flight booking</li>
+                <li><code>book flight</code> - Start flight booking</li>
+                <li><code>book deal id X</code> - Book a specific deal (X = Deal ID)</li>
+            </ul>
+
+            <h3>Deal Commands</h3>
+            <ul>
+                <li><code>deals</code> - Show all available deals</li>
+                <li><code>show deals</code> - Show all available deals</li>
+                <li><code>lowest fare deals</code> - Show cheapest deals</li>
+                <li><code>deals from [city] to [city]</code> - Search deals by route</li>
+                <li><code>deals in [month]</code> - Search deals by month</li>
+            </ul>
+
+            <h3>Information Commands</h3>
+            <ul>
+                <li><code>help</code> - Show help information</li>
+                <li><code>terms</code> - View terms and conditions</li>
+                <li><code>contact</code> - Contact support information</li>
+                <li><code>cancel</code> - Cancellation policy</li>
+                <li><code>what is chalo india</code> - Company information</li>
+            </ul>
+
+            <h3>General Commands</h3>
+            <ul>
+                <li><code>hi</code> or <code>hello</code> - Greet the chatbot</li>
+                <li><code>who are you</code> - Learn about the chatbot</li>
+            </ul>
+
+            <h2 id="faq">5. Frequently Asked Questions</h2>
+
+            <h3>Q: How do I cancel a booking?</h3>
+            <p>A: Type <code>cancel</code> to see the cancellation policy. For actual cancellations, contact support.</p>
+
+            <h3>Q: Can I book for multiple passengers?</h3>
+            <p>A: Yes! When asked for passengers, enter the number (1-9). The system will book for all passengers.</p>
+
+            <h3>Q: What if a deal is out of stock?</h3>
+            <p>A: The chatbot will inform you if a deal is unavailable. Choose another deal or book a regular flight.</p>
+
+            <h3>Q: Can I modify my booking?</h3>
+            <p>A: Currently, modifications require contacting support. Type <code>contact</code> for support information.</p>
+
+            <h3>Q: What payment methods are accepted?</h3>
+            <p>A: Payment details are provided after booking confirmation via email.</p>
+
+            <h3>Q: How do I know if my booking was successful?</h3>
+            <p>A: You'll receive a confirmation message and email after typing <code>confirm</code>.</p>
+
+            <h2 id="troubleshooting">6. Troubleshooting</h2>
+
+            <h3>Chatbot Not Responding</h3>
+            <ul>
+                <li>Check if the server is running (should see "Server is running" message)</li>
+                <li>Refresh the page</li>
+                <li>Check browser console for errors</li>
+            </ul>
+
+            <h3>Booking Steps Not Working</h3>
+            <ul>
+                <li>Make sure you're following the exact format requested</li>
+                <li>For dates, use DD/MM/YYYY format</li>
+                <li>For email, include @ and .</li>
+                <li>For passport, use at least 5 characters</li>
+            </ul>
+
+            <h3>Deals Not Showing</h3>
+            <ul>
+                <li>Try typing <code>deals</code> again</li>
+                <li>Check if deals are available (some may be out of stock)</li>
+                <li>Try a different search query</li>
+            </ul>
+
+            <h3>Error Messages</h3>
+            <ul>
+                <li><strong>"Server error":</strong> Backend server may be down. Check server status.</li>
+                <li><strong>"Invalid format":</strong> Check the format of your input (dates, email, etc.)</li>
+                <li><strong>"Deal not found":</strong> The Deal ID doesn't exist. Check available deals first.</li>
+            </ul>
+
+            <h2>7. Tips for Best Experience</h2>
+            <ul>
+                <li>✅ Use exact commands as shown in the guide</li>
+                <li>✅ Follow date format: DD/MM/YYYY</li>
+                <li>✅ Check deal availability before booking</li>
+                <li>✅ Review booking summary before confirming</li>
+                <li>✅ Keep your booking reference number safe</li>
+                <li>✅ Contact support if you need assistance</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2025 Chalo India Flight Booking. All rights reserved.</p>
+            <p>For support, contact: support@chaloindia.com</p>
+        </footer>
+    </div>
+</body>
+</html>
+

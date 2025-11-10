@@ -1,0 +1,11 @@
+node_modules/
+.env
+*.log
+.DS_Store
+pdfs/*.pdf
+!pdfs/.gitkeep
+bookings/
+!bookings/.gitkeep
+deals/*.json
+!deals/.gitkeep
+

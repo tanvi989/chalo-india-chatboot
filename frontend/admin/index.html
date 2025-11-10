@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Chalo India Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #d32f2f, #f44336);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            margin-bottom: 10px;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .nav a {
+            color: #d32f2f;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 600;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
+        }
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 0 5px 5px 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+            color: #d32f2f;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-danger {
+            background: #d32f2f;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #b71c1c;
+        }
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1976D2;
+        }
+        .btn-success {
+            background: #4caf50;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #388e3c;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .close {
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+        .close:hover {
+            color: #333;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔐 Admin Panel - Chalo India Chatbot</h1>
+        <p>Manage bookings, deals, and system data</p>
+    </div>
+
+    <div class="nav">
+        <a href="../index.html">← Back to Chatbot</a>
+        <a href="../user-guide.html">User Guide</a>
+        <a href="../developer-guide.html">Developer Guide</a>
+    </div>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Bookings</h3>
+                <div class="value" id="totalBookings">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Deals</h3>
+                <div class="value" id="totalDeals">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Deals</h3>
+                <div class="value" id="activeDeals">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Revenue (AUD)</h3>
+                <div class="value" id="totalRevenue">$0</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('bookings')">📋 Bookings</div>
+            <div class="tab" onclick="switchTab('deals')">💰 Deals</div>
+            <div class="tab" onclick="switchTab('add-deal')">➕ Add Deal</div>
+        </div>
+
+        <!-- Bookings Tab -->
+        <div id="bookings" class="tab-content active">
+            <h2>All Bookings</h2>
+            <div class="search-box">
+                <input type="text" id="bookingSearch" placeholder="Search bookings by name, email, or route..." onkeyup="filterBookings()">
+            </div>
+            <div id="bookingsTable"></div>
+        </div>
+
+        <!-- Deals Tab -->
+        <div id="deals" class="tab-content">
+            <h2>All Deals</h2>
+            <div class="search-box">
+                <input type="text" id="dealSearch" placeholder="Search deals by route, airline, or PNR..." onkeyup="filterDeals()">
+            </div>
+            <div id="dealsTable"></div>
+        </div>
+
+        <!-- Add Deal Tab -->
+        <div id="add-deal" class="tab-content">
+            <h2>Add New Deal</h2>
+            <form id="addDealForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PNR *</label>
+                        <input type="text" name="pnr" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Departure Date *</label>
+                        <input type="date" name="dep_date" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Route * (e.g., DEL-MEL)</label>
+                        <input type="text" name="route" required pattern="[A-Z]{3}-[A-Z]{3}">
+                    </div>
+                    <div class="form-group">
+                        <label>Airline Code *</label>
+                        <input type="text" name="airline_code" required maxlength="2">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Flight 1 *</label>
+                        <input type="text" name="flight1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Flight 2</label>
+                        <input type="text" name="flight2">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>AUD Fare *</label>
+                        <input type="number" name="aud_fare" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>INR Fare</label>
+                        <input type="number" name="ind_fare" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Original Stock *</label>
+                        <input type="number" name="original_stock" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Current Stock *</label>
+                        <input type="number" name="current_stock" required min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Route Type *</label>
+                    <select name="route_type" required>
+                        <option value="Inbound">Inbound</option>
+                        <option value="Outbound">Outbound</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add Deal</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api/admin';
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+            
+            if (tabName === 'bookings') loadBookings();
+            if (tabName === 'deals') loadDeals();
+        }
+
+        async function loadBookings() {
+            try {
+                const response = await fetch(`${API_URL}/bookings`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || `HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                displayBookings(data.bookings || []);
+                document.getElementById('totalBookings').textContent = data.bookings?.length || 0;
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                document.getElementById('bookingsTable').innerHTML = `<p style="color:red;">Error loading bookings: ${error.message}</p><p>Make sure the server is running and bookings directory exists.</p>`;
+            }
+        }
+
+        function displayBookings(bookings) {
+            if (bookings.length === 0) {
+                document.getElementById('bookingsTable').innerHTML = '<p>No bookings found</p>';
+                return;
+            }
+
+            let html = '<table><thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Route</th><th>Deal ID</th><th>Passengers</th><th>Class</th></tr></thead><tbody>';
+            bookings.forEach(booking => {
+                const date = new Date(booking.timestamp || booking.bookingDate).toLocaleDateString();
+                const route = booking.fromCity && booking.toCity 
+                    ? `${booking.fromCity} → ${booking.toCity}` 
+                    : 'N/A';
+                html += `<tr>
+                    <td>${date}</td>
+                    <td>${booking.name || 'N/A'}</td>
+                    <td>${booking.email || 'N/A'}</td>
+                    <td>${route}</td>
+                    <td>${booking.dealId || '-'}</td>
+                    <td>${booking.passengers || 'N/A'}</td>
+                    <td>${booking.travelClass || 'N/A'}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('bookingsTable').innerHTML = html;
+        }
+
+        async function loadDeals() {
+            try {
+                const response = await fetch(`${API_URL}/deals`);
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+                    throw new Error(errorData.error || `HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                displayDeals(data.deals || []);
+                document.getElementById('totalDeals').textContent = data.deals?.length || 0;
+                document.getElementById('activeDeals').textContent = data.deals?.filter(d => d.status === 'active').length || 0;
+                
+                // Calculate revenue
+                let revenue = 0;
+                data.deals.forEach(deal => {
+                    const sold = (deal.original_stock || 0) - (deal.current_stock || 0);
+                    revenue += sold * (deal.aud_fare || 0);
+                });
+                document.getElementById('totalRevenue').textContent = '$' + revenue.toLocaleString();
+            } catch (error) {
+                console.error('Error loading deals:', error);
+                document.getElementById('dealsTable').innerHTML = `<p style="color:red;">Error loading deals: ${error.message}</p>`;
+            }
+        }
+
+        function displayDeals(deals) {
+            if (deals.length === 0) {
+                document.getElementById('dealsTable').innerHTML = '<p>No deals found</p>';
+                return;
+            }
+
+            let html = '<table><thead><tr><th>ID</th><th>PNR</th><th>Route</th><th>Date</th><th>Price (AUD)</th><th>Stock</th><th>Airline</th><th>Actions</th></tr></thead><tbody>';
+            deals.forEach(deal => {
+                const date = new Date(deal.dep_date).toLocaleDateString();
+                html += `<tr>
+                    <td>${deal.auto_id}</td>
+                    <td>${deal.pnr}</td>
+                    <td>${deal.route}</td>
+                    <td>${date}</td>
+                    <td>$${deal.aud_fare}</td>
+                    <td>${deal.current_stock}/${deal.original_stock}</td>
+                    <td>${deal.airline_code}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteDeal(${deal.auto_id})">Delete</button>
+                    </td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            document.getElementById('dealsTable').innerHTML = html;
+        }
+
+        async function deleteDeal(dealId) {
+            if (!confirm(`Are you sure you want to delete Deal ID ${dealId}?`)) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/deals/${dealId}`, {
+                    method: 'DELETE'
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Deal deleted successfully');
+                    loadDeals();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to delete deal'));
+                }
+            } catch (error) {
+                console.error('Error deleting deal:', error);
+                alert('Error deleting deal');
+            }
+        }
+
+        document.getElementById('addDealForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const deal = Object.fromEntries(formData);
+            
+            // Convert to proper types
+            deal.aud_fare = parseFloat(deal.aud_fare);
+            deal.ind_fare = deal.ind_fare ? parseFloat(deal.ind_fare) : null;
+            deal.original_stock = parseInt(deal.original_stock);
+            deal.current_stock = parseInt(deal.current_stock);
+            deal.flight2 = deal.flight2 || deal.flight1;
+            deal.status = 'active';
+            
+            try {
+                const response = await fetch(`${API_URL}/deals`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(deal)
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Deal added successfully!');
+                    e.target.reset();
+                    loadDeals();
+                    switchTab('deals');
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to add deal'));
+                }
+            } catch (error) {
+                console.error('Error adding deal:', error);
+                alert('Error adding deal');
+            }
+        });
+
+        function filterBookings() {
+            // Simple client-side filtering
+            const search = document.getElementById('bookingSearch').value.toLowerCase();
+            // Reload and filter would be better implemented server-side
+        }
+
+        function filterDeals() {
+            // Simple client-side filtering
+            const search = document.getElementById('dealSearch').value.toLowerCase();
+            // Reload and filter would be better implemented server-side
+        }
+
+        // Load data on page load
+        loadBookings();
+        loadDeals();
+    </script>
+</body>
+</html>
+

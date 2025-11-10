@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Guide - Chalo India Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        nav {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav a {
+            color: #2196F3;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #2196F3;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2196F3;
+        }
+        h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d63384;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        pre code {
+            background: none;
+            color: #abb2bf;
+            padding: 0;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #2196F3;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .back-btn {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .back-btn:hover {
+            background: #1976D2;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>👨‍💻 Chalo India Chatbot - Developer Guide</h1>
+        <p>Complete technical documentation for developers</p>
+    </header>
+
+    <div class="container">
+        <nav>
+            <a href="index.html">← Back to Chatbot</a>
+            <a href="user-guide.html">User Guide</a>
+            <a href="../admin/index.html">Admin Panel</a>
+        </nav>
+
+        <div class="content">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#setup">Project Setup</a></li>
+                <li><a href="#architecture">Architecture Overview</a></li>
+                <li><a href="#api">API Endpoints</a></li>
+                <li><a href="#rag">RAG Implementation</a></li>
+                <li><a href="#booking">Booking System</a></li>
+                <li><a href="#deals">Deals System</a></li>
+                <li><a href="#database">Data Storage</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+            </ol>
+
+            <h2 id="setup">1. Project Setup</h2>
+            
+            <h3>Prerequisites</h3>
+            <ul>
+                <li>Node.js (v14 or higher)</li>
+                <li>npm (Node Package Manager)</li>
+                <li>Google Gemini API Key</li>
+            </ul>
+
+            <h3>Installation Steps</h3>
+            <pre><code># Clone or navigate to project directory
+cd chalo-india-chatboot
+
+# Install dependencies
+npm install
+
+# Add PDF files to pdfs/ folder
+# - privacy.pdf
+# - booking.pdf
+# - chaloindia.pdf
+# - cancellation.pdf
+# - terms.pdf
+
+# Configure API key in server.js
+# Replace GEMINI_API_KEY with your actual key
+
+# Start the server
+npm start
+
+# Server runs on http://localhost:3000
+# Chatbot UI: http://localhost:3000/index.html</code></pre>
+
+            <h3>Project Structure</h3>
+            <pre><code>chalo-india-chatboot/
+├── frontend/
+│   ├── index.html          # Main chatbot UI
+│   ├── user-guide.html     # User documentation
+│   └── developer-guide.html # This file
+├── admin/
+│   └── index.html          # Admin dashboard
+├── pdfs/                   # PDF documents for RAG
+├── deals/
+│   └── deals.json          # Flight deals data
+├── bookings/               # Saved bookings
+├── server.js               # Express server & API
+├── package.json            # Dependencies
+└── README.md               # Project readme</code></pre>
+
+            <h2 id="architecture">2. Architecture Overview</h2>
+            
+            <h3>Technology Stack</h3>
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Technology</th>
+                </tr>
+                <tr>
+                    <td>Frontend</td>
+                    <td>HTML, CSS, JavaScript (Vanilla)</td>
+                </tr>
+                <tr>
+                    <td>Backend</td>
+                    <td>Node.js, Express.js</td>
+                </tr>
+                <tr>
+                    <td>AI/ML</td>
+                    <td>Google Gemini API, LangChain</td>
+                </tr>
+                <tr>
+                    <td>RAG</td>
+                    <td>LangChain, MemoryVectorStore</td>
+                </tr>
+                <tr>
+                    <td>PDF Processing</td>
+                    <td>pdf-parse</td>
+                </tr>
+                <tr>
+                    <td>Data Storage</td>
+                    <td>JSON files (deals, bookings)</td>
+                </tr>
+            </table>
+
+            <h3>System Flow</h3>
+            <div class="info-box">
+                <strong>Request Flow:</strong><br>
+                1. User sends message via frontend<br>
+                2. Frontend sends POST request to /api/chat<br>
+                3. Server processes message (direct handlers or RAG)<br>
+                4. Response sent back to frontend<br>
+                5. Frontend displays response
+            </div>
+
+            <h2 id="api">3. API Endpoints</h2>
+
+            <h3>POST /api/chat</h3>
+            <p>Main chat endpoint for user messages.</p>
+            <pre><code>Request:
+{
+  "message": "user message here",
+  "sessionId": "optional-session-id"
+}
+
+Response:
+{
+  "response": "bot response",
+  "bookingStep": "step-name",
+  "cities": [...],
+  "deals": [...]
+}</code></pre>
+
+            <h3>GET /api/health</h3>
+            <p>Health check endpoint.</p>
+            <pre><code>Response:
+{
+  "status": "ok",
+  "ragInitialized": true,
+  "dealsLoaded": 8
+}</code></pre>
+
+            <h3>POST /api/reload</h3>
+            <p>Reload PDFs and deals (development).</p>
+
+            <h3>GET /api/deals?q=query</h3>
+            <p>Search for deals.</p>
+            <pre><code>Response:
+{
+  "deals": [...],
+  "total": 8
+}</code></pre>
+
+            <h3>Admin Endpoints</h3>
+            <table>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>/api/admin/bookings</td>
+                    <td>GET</td>
+                    <td>Get all bookings</td>
+                </tr>
+                <tr>
+                    <td>/api/admin/deals</td>
+                    <td>GET</td>
+                    <td>Get all deals</td>
+                </tr>
+                <tr>
+                    <td>/api/admin/deals</td>
+                    <td>POST</td>
+                    <td>Add new deal</td>
+                </tr>
+                <tr>
+                    <td>/api/admin/deals/:id</td>
+                    <td>DELETE</td>
+                    <td>Delete deal</td>
+                </tr>
+                <tr>
+                    <td>/api/admin/deals/:id</td>
+                    <td>PUT</td>
+                    <td>Update deal</td>
+                </tr>
+            </table>
+
+            <h2 id="rag">4. RAG Implementation</h2>
+
+            <h3>How RAG Works</h3>
+            <ol>
+                <li><strong>Document Loading:</strong> PDFs are loaded and converted to text</li>
+                <li><strong>Chunking:</strong> Documents split into 1000-char chunks with 200-char overlap</li>
+                <li><strong>Embedding:</strong> Chunks converted to vectors using Google embeddings</li>
+                <li><strong>Storage:</strong> Vectors stored in MemoryVectorStore</li>
+                <li><strong>Retrieval:</strong> Relevant chunks retrieved based on query similarity</li>
+                <li><strong>Generation:</strong> Context + query sent to Gemini for response</li>
+            </ol>
+
+            <h3>Fallback Mechanism</h3>
+            <div class="warning-box">
+                <strong>Note:</strong> If embeddings quota is exceeded, the system falls back to:
+                <ul>
+                    <li>Text-based keyword matching</li>
+                    <li>Direct LLM invocation for general knowledge</li>
+                </ul>
+            </div>
+
+            <h2 id="booking">5. Booking System</h2>
+
+            <h3>Booking Flow</h3>
+            <pre><code>Steps:
+1. name → 2. email → 3. mobile → 4. passport
+5. fromCountry → 6. fromCity → 7. toCountry → 8. toCity
+9. departureDate → 10. returnDate → 11. passengers
+12. travelClass → 13. confirm</code></pre>
+
+            <h3>Session Management</h3>
+            <p>Bookings use in-memory session storage (Map). Each session stores:</p>
+            <ul>
+                <li>Current step</li>
+                <li>Collected user data</li>
+                <li>Deal ID (if booking with deal)</li>
+            </ul>
+
+            <h3>Data Persistence</h3>
+            <p>Bookings are saved to:</p>
+            <ul>
+                <li><code>bookings/[timestamp].json</code> - Individual booking files</li>
+                <li><code>bookings/bookings.txt</code> - Text log of all bookings</li>
+            </ul>
+
+            <h2 id="deals">6. Deals System</h2>
+
+            <h3>Deal Data Structure</h3>
+            <pre><code>{
+  "auto_id": 1,
+  "pnr": "6BYNXY",
+  "dep_date": "2022-11-09",
+  "route": "DEL-MEL",
+  "aud_fare": 750,
+  "current_stock": 10,
+  "original_stock": 10,
+  "airline_code": "SQ",
+  "flight1": "SQ403",
+  "flight2": "SQ207",
+  "route_type": "Inbound",
+  "status": "active"
+}</code></pre>
+
+            <h3>Stock Management</h3>
+            <p>When a deal is booked:</p>
+            <ol>
+                <li>Stock is validated before confirmation</li>
+                <li>Stock decreases by number of passengers</li>
+                <li><code>deals.json</code> is updated immediately</li>
+                <li>Server logs the stock change</li>
+            </ol>
+
+            <h2 id="database">7. Data Storage</h2>
+
+            <h3>File-Based Storage</h3>
+            <table>
+                <tr>
+                    <th>Data Type</th>
+                    <th>Location</th>
+                    <th>Format</th>
+                </tr>
+                <tr>
+                    <td>Deals</td>
+                    <td>deals/deals.json</td>
+                    <td>JSON Array</td>
+                </tr>
+                <tr>
+                    <td>Bookings</td>
+                    <td>bookings/*.json</td>
+                    <td>JSON Objects</td>
+                </tr>
+                <tr>
+                    <td>Booking Log</td>
+                    <td>bookings/bookings.txt</td>
+                    <td>Plain Text</td>
+                </tr>
+            </table>
+
+            <h3>Adding New Deals</h3>
+            <pre><code>// Edit deals/deals.json
+[
+  {
+    "auto_id": 9,  // Unique ID
+    "pnr": "ABC123",
+    "dep_date": "2025-12-01",
+    "route": "SYD-BOM",
+    "aud_fare": 800,
+    "current_stock": 5,
+    "original_stock": 5,
+    "airline_code": "QF",
+    "flight1": "QF123",
+    "flight2": "QF456",
+    "route_type": "Outbound",
+    "status": "active"
+  }
+]</code></pre>
+
+            <h2 id="deployment">8. Deployment</h2>
+
+            <h3>Production Considerations</h3>
+            <div class="warning-box">
+                <strong>Important:</strong>
+                <ul>
+                    <li>Replace in-memory sessions with database (Redis/MongoDB)</li>
+                    <li>Use environment variables for API keys</li>
+                    <li>Implement proper authentication for admin panel</li>
+                    <li>Add rate limiting for API endpoints</li>
+                    <li>Set up proper logging and monitoring</li>
+                    <li>Use production-grade PDF processing</li>
+                </ul>
+            </div>
+
+            <h3>Environment Variables</h3>
+            <pre><code># .env file
+GEMINI_API_KEY=your_api_key_here
+PORT=3000
+NODE_ENV=production</code></pre>
+
+            <h3>Security Best Practices</h3>
+            <ul>
+                <li>Never commit API keys to version control</li>
+                <li>Use HTTPS in production</li>
+                <li>Implement CORS properly</li>
+                <li>Validate all user inputs</li>
+                <li>Sanitize data before storage</li>
+            </ul>
+
+            <h2>9. Common Development Tasks</h2>
+
+            <h3>Adding New Commands</h3>
+            <pre><code>// In server.js, add handler before RAG processing:
+if (lowerMessage === 'your-command') {
+    return res.json({ 
+        response: 'Your response here' 
+    });
+}</code></pre>
+
+            <h3>Modifying Booking Steps</h3>
+            <pre><code>// In handleBookingStep function, add new case:
+case 'newStep':
+    booking.newField = userMessage;
+    booking.step = 'nextStep';
+    bookingSessions.set(sessionId, booking);
+    return res.json({
+        response: 'Next step message',
+        bookingStep: 'nextStep'
+    });</code></pre>
+
+            <h3>Debugging Tips</h3>
+            <ul>
+                <li>Check server console for logs</li>
+                <li>Use browser DevTools for frontend debugging</li>
+                <li>Test API endpoints with Postman/curl</li>
+                <li>Check booking/deal JSON files for data issues</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2025 Chalo India Flight Booking. Developer Documentation.</p>
+        </footer>
+    </div>
+</body>
+</html>
+
