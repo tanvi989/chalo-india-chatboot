@@ -414,3 +414,4 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'fallback_key';
 
 **Happy Coding! 🚀**
 
+

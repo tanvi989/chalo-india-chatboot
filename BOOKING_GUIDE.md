@@ -128,3 +128,4 @@ When you confirm a booking, it is saved to:
 - You can type "cancel" at any step to start over
 - Booking is only saved when you type "confirm"
 
+

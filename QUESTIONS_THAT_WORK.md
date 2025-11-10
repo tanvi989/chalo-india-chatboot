@@ -112,3 +112,4 @@ Try these in order:
 
 **Note**: The system uses text-based retrieval by default to avoid API quota issues. It will automatically use embeddings if available, but works perfectly fine without them!
 
+
